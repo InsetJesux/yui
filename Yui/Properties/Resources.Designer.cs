@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InteractionFramework.Properties {
+namespace Yui.Properties {
     using System;
     
     

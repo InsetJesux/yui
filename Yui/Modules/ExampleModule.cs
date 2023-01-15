@@ -1,10 +1,10 @@
 using Discord;
 using Discord.Interactions;
-using InteractionFramework.Attributes;
+using Yui.Attributes;
 using System;
 using System.Threading.Tasks;
 
-namespace InteractionFramework.Modules
+namespace Yui.Modules
 {
     // Interation modules must be public and inherit from an IInterationModuleBase
     public class ExampleModule : InteractionModuleBase<SocketInteractionContext>
