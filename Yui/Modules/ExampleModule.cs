@@ -1,6 +1,6 @@
 using Discord;
 using Discord.Interactions;
-using InteractionFramework.Attributes;
+using Yui.Attributes;
 using System;
 using System.Threading.Tasks;
 
