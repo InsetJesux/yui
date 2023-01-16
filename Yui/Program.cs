@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Yui
+namespace InteractionFramework
 {
     public class Program
     {
