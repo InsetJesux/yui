@@ -4,7 +4,7 @@ using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
 
-namespace Yui.Attributes
+namespace InteractionFramework.Attributes
 {
     internal class DoUserCheck : PreconditionAttribute
     {
