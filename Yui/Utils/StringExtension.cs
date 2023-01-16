@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 /// <summary>
 /// Summary description for Class1
 /// </summary>
-namespace InteractionFramework.Utils
+namespace Yui.Utils
 {
 	public class StringExtension
 	{
