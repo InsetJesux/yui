@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-
+///Este archivo representa la desesperacion sufrida por Velka el dia 16-01-2023 en una terrible y sangrienta mañana. El lado positivo es que Pyrus aprobo el bot
 namespace Yui
 {
     public class Program
