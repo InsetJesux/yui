@@ -14,17 +14,8 @@ namespace Yui
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _services;
         private readonly DiscordSocketConfig _socketConfig;
-<<<<<<< HEAD
         private readonly DiscordSocketClient _client;
-=======
 
-        /// <summary>
-        /// Crea una nueva instancia del bot
-        /// </summary>
-        /// <param name="configuration">Si es <see langword="null"/> se creará un <see cref="IConfiguration"/> por defecto</param>
-        /// <param name="services">Si es <see langword="null"/> se creará un <see cref="IServiceProvider"/> por defecto</param>
-        /// <param name="socketConfig">Si es <see langword="null"/> se creará un <see cref="DiscordSocketConfig"/> por defecto</param>
->>>>>>> 9a297df7f8a278d485150ea63cba53f9cb819288
         public Yui(IConfiguration configuration = null, IServiceProvider services = null, DiscordSocketConfig socketConfig = null)
         {
             _configuration = configuration ?? BuildConfiguration();
@@ -64,18 +55,7 @@ namespace Yui
                 .AddJsonFile("appsettings.json", optional: true)
                 .Build();
         }
-<<<<<<< HEAD
-        private DiscordSocketClient BuildClient()
-        {
-            return new DiscordSocketClient(_socketConfig);
-        }
-=======
 
-        /// <summary>
-        /// Crea un <see cref="IServiceProvider"/> por defecto
-        /// </summary>
-        /// <returns><see cref="IServiceProvider"/> por defecto</returns>
->>>>>>> 9a297df7f8a278d485150ea63cba53f9cb819288
         private IServiceProvider BuildServices()
         {
             return new ServiceCollection()
@@ -87,15 +67,7 @@ namespace Yui
                 .AddSingleton<InteractionHandler>()
                 .BuildServiceProvider();
         }
-<<<<<<< HEAD
-        
-=======
 
-        /// <summary>
-        /// Crea un <see cref="DiscordSocketConfig"/> por defecto
-        /// </summary>
-        /// <returns><see cref="DiscordSocketConfig"/> por defecto</returns>
->>>>>>> 9a297df7f8a278d485150ea63cba53f9cb819288
         private DiscordSocketConfig BuildSocketConfig()
         {
             return new DiscordSocketConfig()
