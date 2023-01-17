@@ -56,6 +56,10 @@ namespace Yui
                 .AddJsonFile("appsettings.json", optional: true)
                 .Build();
         }
+        /// <summary>
+        /// Crea los listeners necesarios para los eventos y se los asigna al cliente
+        /// </summary>
+        /// <returns>Devuelve el cliente con los listeners vinculados</returns>
         private DiscordSocketClient BuildClient()
         {
             DiscordSocketClient client = new DiscordSocketClient(_socketConfig);
