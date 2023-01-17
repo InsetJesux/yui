@@ -16,6 +16,7 @@ namespace Yui
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _services;
         private readonly DiscordSocketConfig _socketConfig;
+        private readonly DiscordSocketClient _client;
 
         /// <summary>
         /// Crea una nueva instancia del bot
@@ -27,6 +28,7 @@ namespace Yui
         {
             _configuration = configuration ?? BuildConfiguration();
             _socketConfig = socketConfig ?? BuildSocketConfig();
+            _client = BuildClient();
             _services = services ?? BuildServices();
         }
 
@@ -61,6 +63,15 @@ namespace Yui
         }
 
         /// <summary>
+        /// Crea una nueva instancia de <see cref="DiscordSocketClient"/>
+        /// </summary>
+        /// <returns>Nueva instancia de <see cref="DiscordSocketClient"/></returns>
+        private DiscordSocketClient BuildClient()
+        {
+            return new DiscordSocketClient(_socketConfig);
+        }
+
+        /// <summary>
         /// Crea un <see cref="IServiceProvider"/> por defecto
         /// </summary>
         /// <returns><see cref="IServiceProvider"/> por defecto</returns>
@@ -69,7 +80,7 @@ namespace Yui
             return new ServiceCollection()
                 .AddSingleton(_configuration)
                 .AddSingleton(_socketConfig)
-                .AddSingleton<DiscordSocketClient>()
+                .AddSingleton(_client)
                 .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()))
                 .AddSingleton<InteractionHandler>()
                 .BuildServiceProvider();
