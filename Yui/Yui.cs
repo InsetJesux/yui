@@ -55,7 +55,10 @@ namespace Yui
                 .AddJsonFile("appsettings.json", optional: true)
                 .Build();
         }
-
+        private DiscordSocketClient BuildClient()
+        {
+            return new DiscordSocketClient(_socketConfig);
+        }
         private IServiceProvider BuildServices()
         {
             return new ServiceCollection()
