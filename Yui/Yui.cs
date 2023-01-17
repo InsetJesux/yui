@@ -3,6 +3,8 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog.Events;
+using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,8 +26,8 @@ namespace Yui
         public Yui(IConfiguration configuration = null, IServiceProvider services = null, DiscordSocketConfig socketConfig = null)
         {
             _configuration = configuration ?? BuildConfiguration();
-            _services = services ?? BuildServices();
             _socketConfig = socketConfig ?? BuildSocketConfig();
+            _services = services ?? BuildServices();
         }
 
         public async Task RunAsync()
@@ -87,6 +89,19 @@ namespace Yui
         }
 
         private async Task LogAsync(LogMessage message)
-            => Console.WriteLine(message.ToString());
+        {
+            LogEventLevel severity = message.Severity switch
+            {
+                LogSeverity.Critical => LogEventLevel.Fatal,
+                LogSeverity.Error => LogEventLevel.Error,
+                LogSeverity.Warning => LogEventLevel.Warning,
+                LogSeverity.Info => LogEventLevel.Information,
+                LogSeverity.Verbose => LogEventLevel.Verbose,
+                LogSeverity.Debug => LogEventLevel.Debug,
+                _ => LogEventLevel.Information
+            };
+            Log.Write(severity, message.Exception, "[{Source}] {Message}", message.Source, message.Message);
+            await Task.CompletedTask;
+        }
     }
 }
