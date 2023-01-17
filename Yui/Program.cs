@@ -9,5 +9,14 @@ namespace Yui
                 .GetAwaiter()
                 .GetResult();
         }
+
+        public static bool IsDebug()
+        {
+#if DEBUG
+            return true;
+#else
+            return false;
+#endif
+        }
     }
 }
