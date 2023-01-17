@@ -14,13 +14,16 @@ namespace Yui
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _services;
         private readonly DiscordSocketConfig _socketConfig;
-
+        private readonly DiscordSocketClient _client;
         public Yui(IConfiguration configuration = null, IServiceProvider services = null, DiscordSocketConfig socketConfig = null)
         {
             _configuration = configuration ?? BuildConfiguration();
-            _services = services ?? BuildServices();
             _socketConfig = socketConfig ?? BuildSocketConfig();
+            _client = BuildClient();
+            _services = services ?? BuildServices();
         }
+
+       
 
         public async Task RunAsync()
         {
@@ -47,18 +50,22 @@ namespace Yui
                 .AddJsonFile("appsettings.json", optional: true)
                 .Build();
         }
-
+        private DiscordSocketClient BuildClient()
+        {
+            return new DiscordSocketClient(_socketConfig);
+        }
         private IServiceProvider BuildServices()
         {
             return new ServiceCollection()
                 .AddSingleton(_configuration)
                 .AddSingleton(_socketConfig)
-                .AddSingleton<DiscordSocketClient>()
+                .AddSingleton(_client)
+                //.AddSingleton<DiscordSocketClient>()
                 .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()))
                 .AddSingleton<InteractionHandler>()
                 .BuildServiceProvider();
         }
-
+        
         private DiscordSocketConfig BuildSocketConfig()
         {
             return new DiscordSocketConfig()

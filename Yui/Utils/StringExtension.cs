@@ -15,10 +15,10 @@ namespace Yui.Utils
 		/// <param name="str">String a revisar</param>
 		/// <param name="pattern">Patron regex</param>
 		/// <returns></returns>
-		public static bool RegexMatch(String str, String pattern)
+		/*public static bool RegexMatch(String str, String pattern)
 		{
 			return Regex.Match(str, pattern);
-		}
+		}*/
 
 
 
