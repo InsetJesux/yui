@@ -16,6 +16,12 @@ namespace Yui
         private readonly DiscordSocketConfig _socketConfig;
         private readonly DiscordSocketClient _client;
 
+        /// <summary>
+        /// Crea una nueva instancia del bot
+        /// </summary>
+        /// <param name="configuration">Si es <see langword="null"/> se creará un <see cref="IConfiguration"/> por defecto</param>
+        /// <param name="services">Si es <see langword="null"/> se creará un <see cref="IServiceProvider"/> por defecto</param>
+        /// <param name="socketConfig">Si es <see langword="null"/> se creará un <see cref="DiscordSocketConfig"/> por defecto</param>
         public Yui(IConfiguration configuration = null, IServiceProvider services = null, DiscordSocketConfig socketConfig = null)
         {
             _configuration = configuration ?? BuildConfiguration();
@@ -23,8 +29,6 @@ namespace Yui
             _client = BuildClient();
             _services = services ?? BuildServices();
         }
-
-       
 
         public async Task RunAsync()
         {
@@ -55,22 +59,35 @@ namespace Yui
                 .AddJsonFile("appsettings.json", optional: true)
                 .Build();
         }
+
+        /// <summary>
+        /// Crea una nueva instancia de <see cref="DiscordSocketClient"/>
+        /// </summary>
+        /// <returns>Nueva instancia de <see cref="DiscordSocketClient"/></returns>
         private DiscordSocketClient BuildClient()
         {
             return new DiscordSocketClient(_socketConfig);
         }
+
+        /// <summary>
+        /// Crea un <see cref="IServiceProvider"/> por defecto
+        /// </summary>
+        /// <returns><see cref="IServiceProvider"/> por defecto</returns>
         private IServiceProvider BuildServices()
         {
             return new ServiceCollection()
                 .AddSingleton(_configuration)
                 .AddSingleton(_socketConfig)
                 .AddSingleton(_client)
-                //.AddSingleton<DiscordSocketClient>()
                 .AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()))
                 .AddSingleton<InteractionHandler>()
                 .BuildServiceProvider();
         }
 
+        /// <summary>
+        /// Crea un <see cref="DiscordSocketConfig"/> por defecto
+        /// </summary>
+        /// <returns><see cref="DiscordSocketConfig"/> por defecto</returns>
         private DiscordSocketConfig BuildSocketConfig()
         {
             return new DiscordSocketConfig()
