@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using System;
 using System.ComponentModel;
 using Yui.Models;
 
@@ -20,6 +21,9 @@ namespace Yui.Events.Controllers
         }
         public void UserStatusVoiceChange(VoiceChannelController.UserVoiceChange option, UserVoiceChannelChangeModel uvccm)
         {
+            Console.WriteLine("Valor: "+option+ "\r\nGuild: "+uvccm.Guild.Name);
+            Console.WriteLine("User: "+uvccm.User);
+
             switch (option)
             {
                 case UserVoiceChange.userMove:

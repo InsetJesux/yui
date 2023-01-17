@@ -6,10 +6,12 @@ using Yui.Models;
 
 namespace Yui.Events.Listeners
 {
-    public class ChannelListener
+    public sealed class ChannelListener
     {
         private readonly DiscordSocketClient _client;
         private static VoiceChannelController _controller;
+
+
         public ChannelListener(DiscordSocketClient client)
         {
             _client=client;
