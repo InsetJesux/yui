@@ -40,6 +40,13 @@ namespace Yui
             await _services.GetRequiredService<InteractionHandler>()
                 .InitializeAsync();
 
+            // Comprobar que el token esta configurado
+            if (_configuration["token"] == null)
+            {
+                Log.Error("No se ha encontrado el token en la configuración");
+                return;
+            }
+
             // Iniciar la conexión con la gateway de Discord mediante el token obtenido de la configuración
             await client.LoginAsync(TokenType.Bot, _configuration["token"]);
             await client.StartAsync();
