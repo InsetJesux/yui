@@ -66,7 +66,7 @@ namespace Yui
 
 
         /// <summary>
-        /// Crea una nueva instancia de <see cref="DiscordSocketClient"/>
+        /// Crea una nueva instancia de <see cref="DiscordSocketClient"/> e implimentacion de los listeners necesarios de eventos en la misma
         /// </summary>
         /// <returns>Nueva instancia de <see cref="DiscordSocketClient"/></returns>
 
