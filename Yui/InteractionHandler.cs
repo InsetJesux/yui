@@ -2,6 +2,7 @@ using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -44,9 +45,20 @@ namespace Yui
             // Context & Slash commands can be automatically registered, but this process needs to happen after the client enters the READY state.
             // Since Global Commands take around 1 hour to register, we should use a test guild to instantly update and test our commands.
             if (Program.IsDebug())
-                await _handler.RegisterCommandsToGuildAsync(_configuration.GetValue<ulong>("testGuild"), true);
+            {
+                if (_configuration.GetValue<ulong>("testGuild") == 0)
+                {
+                    Log.Warning("No se ha especificado una id de servidor para registrar los comandos en modo Debug");
+                }
+                else
+                {
+                    await _handler.RegisterCommandsToGuildAsync(_configuration.GetValue<ulong>("testGuild"), true);
+                }
+            }
             else
+            {
                 await _handler.RegisterCommandsGloballyAsync(true);
+            }
         }
 
         private async Task HandleInteraction(SocketInteraction interaction)
