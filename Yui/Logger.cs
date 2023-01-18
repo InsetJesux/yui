@@ -36,7 +36,7 @@ namespace Yui
 
             // Crear logger con escritura asincrona, controlando el nivel de log mediante Lever y pasando las propiedades del proyecto
             return new LoggerConfiguration()
-                .MinimumLevel.ControlledBy(Lever)
+                .MinimumLevel.Verbose()
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Version", version)
                 .Enrich.WithProperty("ProjectName", projectName)
@@ -53,6 +53,7 @@ namespace Yui
         private static SerilogLogger BuildConsoleLogger()
         {
             return new LoggerConfiguration()
+                .MinimumLevel.ControlledBy(Lever)
                 .WriteTo.Console(
                     outputTemplate: "[{Timestamp:HH:mm:ss}] [{ProjectName} v{Version}] [{Level:u4}] {Message:lj}{NewLine}{Exception}",
                     theme: AnsiConsoleTheme.Sixteen
@@ -67,6 +68,7 @@ namespace Yui
         private static SerilogLogger BuildFileLogger()
         {
             return new LoggerConfiguration()
+                .MinimumLevel.ControlledBy(Lever)
                 .WriteTo.File(
                     path: @"logs\log-.log",
                     rollingInterval: RollingInterval.Day,
