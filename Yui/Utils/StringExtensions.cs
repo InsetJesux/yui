@@ -6,7 +6,7 @@ namespace Yui.Utils
 	/// <summary>
 	/// Extensiones para <see cref="string"/>
 	/// </summary>
-	public static class StringExtension
+	public static class StringExtensions
 	{
 		/// <summary>
 		/// Checkea si el string en cuestion cumple el regex otorgado
