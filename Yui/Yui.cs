@@ -1,4 +1,4 @@
-﻿using Discord;
+using Discord;
 using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +8,7 @@ using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Yui.Events.Listeners;
 
 namespace Yui
 {
@@ -17,6 +18,8 @@ namespace Yui
         private readonly IServiceProvider _services;
         private readonly DiscordSocketConfig _socketConfig;
         private readonly DiscordSocketClient _client;
+        private ChannelListener _channelListener;
+
 
         /// <summary>
         /// Crea una nueva instancia del bot
@@ -69,13 +72,19 @@ namespace Yui
                 .Build();
         }
 
+
+
         /// <summary>
-        /// Crea una nueva instancia de <see cref="DiscordSocketClient"/>
+        /// Crea una nueva instancia de <see cref="DiscordSocketClient"/> e implimentacion de los listeners necesarios de eventos en la misma
         /// </summary>
         /// <returns>Nueva instancia de <see cref="DiscordSocketClient"/></returns>
+
         private DiscordSocketClient BuildClient()
         {
-            return new DiscordSocketClient(_socketConfig);
+            DiscordSocketClient client = new DiscordSocketClient(_socketConfig);
+            _channelListener = new ChannelListener(client);
+            client.UserVoiceStateUpdated += _channelListener.ClientUserVoiceStateUpdated;
+            return client;
         }
 
         /// <summary>

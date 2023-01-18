@@ -34,6 +34,19 @@ namespace Yui.Models
                 Guild = null;
             }
         }
+        /// <summary>
+        /// Devuelve true si el usuario se ha movido dentro de la misma guild o si ha salido o entrado de un canal y false si el usuario se ha movido de uan guild a otra
+        /// </summary>
+        /// <returns>True = misma guild o salir/entrar || False = diferente guild</returns>
+        public bool isSameGuild()
+        {
+            bool flag = true;
+            if(this.OldVoiceState.VoiceChannel != null && this.NewVoiceState.VoiceChannel != null)
+            {
+                flag = OldVoiceState.VoiceChannel.Guild.Id == NewVoiceState.VoiceChannel.Guild.Id;
+            }
+            return flag;
+        }
 
     }
 }
