@@ -3,6 +3,8 @@ using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog.Events;
+using Serilog;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,6 +44,13 @@ namespace Yui
             // Inicializar servicio para registrar los comandos
             await _services.GetRequiredService<InteractionHandler>()
                 .InitializeAsync();
+
+            // Comprobar que el token esta configurado
+            if (_configuration["token"] == null)
+            {
+                Log.Error("No se ha encontrado el token en la configuración");
+                return;
+            }
 
             // Iniciar la conexión con la gateway de Discord mediante el token obtenido de la configuración
             await client.LoginAsync(TokenType.Bot, _configuration["token"]);
@@ -107,6 +116,19 @@ namespace Yui
         }
 
         private async Task LogAsync(LogMessage message)
-            => Console.WriteLine(message.ToString());
+        {
+            LogEventLevel severity = message.Severity switch
+            {
+                LogSeverity.Critical => LogEventLevel.Fatal,
+                LogSeverity.Error => LogEventLevel.Error,
+                LogSeverity.Warning => LogEventLevel.Warning,
+                LogSeverity.Info => LogEventLevel.Information,
+                LogSeverity.Verbose => LogEventLevel.Verbose,
+                LogSeverity.Debug => LogEventLevel.Debug,
+                _ => LogEventLevel.Information
+            };
+            Log.Write(severity, message.Exception, "[{Source}] {Message}", message.Source, message.Message);
+            await Task.CompletedTask;
+        }
     }
 }

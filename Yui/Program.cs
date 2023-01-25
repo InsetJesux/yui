@@ -1,3 +1,5 @@
+using Serilog;
+using System;
 ///Este archivo representa la desesperacion sufrida por Velka el dia 16-01-2023 en una terrible y sangrienta mañana. El lado positivo es que Pyrus aprobo el bot
 namespace Yui
 {
@@ -5,9 +7,23 @@ namespace Yui
     {
         static void Main(string[] args)
         {
-            new Yui().RunAsync()
-                .GetAwaiter()
-                .GetResult();
+            // Crear logger
+            Log.Logger = Logger.BuildLogger();
+
+            try
+            {
+                new Yui().RunAsync()
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Fatal exception");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static bool IsDebug()
